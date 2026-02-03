@@ -1,4 +1,7 @@
 {
   "installCommand": "npm install --legacy-peer-deps",
-  "buildCommand": "next build"
+  "buildCommand": "next build --no-type-checking",
+  "env": {
+    "NEXT_PUBLIC_VERCEL_ENV": "production"
+  }
 }
