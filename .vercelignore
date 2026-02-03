@@ -1,0 +1,11 @@
+.next/cache
+node_modules
+*.log
+.DS_Store
+*.md
+.git
+.gitignore
+.eslintrc.json
+tsconfig.json
+*.local
+.env*.local
