@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-warm-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-200;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  
+  .btn-primary {
+    @apply bg-black dark:bg-white text-white dark:text-black px-8 py-3 uppercase tracking-[0.15em] text-sm font-light hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border border-black dark:border-white text-black dark:text-white px-8 py-3 uppercase tracking-[0.15em] text-sm font-light hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-colors duration-200;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-black dark:focus:border-gray-500 transition-colors;
+  }
+
+  .hero-bg-animate {
+    animation: slideUpFade 1.5s ease-out forwards;
+  }
+
+  @keyframes slideUpFade {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
