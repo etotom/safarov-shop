@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       const existingAddresses = await db.address.findMany({ userId: session.user.id })
       for (const addr of existingAddresses) {
         if (addr.isDefault) {
-          await db.address.update({ id: addr.id }, { isDefault: false })
+          await db.address.update({ id: addr.id }, {  isDefault: false  })
         }
       }
     }

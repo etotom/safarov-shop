@@ -3,11 +3,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 async function getProducts() {
-  const products = await db.product.findMany({}, { orderBy: { createdAt: 'desc' } })
+  const products = await db.product.findMany({ orderBy: { createdAt: 'desc' } })
   return Promise.all(
     products.map(async (product) => {
       const [images, category] = await Promise.all([
-        db.productImage.findMany({ productId: product.id }, { orderBy: { position: 'asc' }, take: 1 }),
+        db.productImage.findMany({ where: { productId: product.id },  orderBy: { position: 'asc' }, take: 1 }),
         db.category.findUnique({ id: product.categoryId }),
       ])
       return {

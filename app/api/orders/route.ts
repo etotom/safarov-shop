@@ -10,7 +10,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const orders = await db.order.findMany({ userId: session.user.id }, { orderBy: { createdAt: 'desc' } })
+    const orders = await db.order.findMany({ where: { userId: session.user.id },  orderBy: { createdAt: 'desc' } })
     const ordersWithItems = await Promise.all(
       orders.map(async (order) => {
         const items = await db.orderItem.findMany({ orderId: order.id })

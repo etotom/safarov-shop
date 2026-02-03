@@ -2,7 +2,7 @@ import { db } from './index'
 import bcrypt from 'bcryptjs'
 
 async function main() {
-  console.log('ðŸŒ± Seeding database...')
+  console.log('í¼± Seeding database...')
 
   // Create admin user
   const hashedPassword = await bcrypt.hash('admin123', 10)
@@ -24,7 +24,7 @@ async function main() {
 
   console.log('âœ… Created users')
 
-  // Create categories
+  // Create categories - FIXED: use where: { slug: ... } for upsert
   const womenCategory = await db.category.upsert({
     where: { slug: 'women' },
     update: {},
@@ -804,13 +804,14 @@ async function main() {
   console.log('âœ… Created address')
 
   // Create sample order
-  const elegantWhiteCoat = await db.product.findUnique({ where: { slug: 'elegant-white-coat-women' } })
+  const elegantWhiteCoat = await db.product.findUnique({ slug: 'elegant-white-coat-women' })
 
   if (elegantWhiteCoat) {
     const order = await db.order.create({
       userId: user.id,
       status: 'DELIVERED',
       total: 2899.99,
+      currency: 'USD',
       shippingAddressId: address.id,
     })
 
@@ -824,7 +825,7 @@ async function main() {
     console.log('âœ… Created sample order')
   }
 
-  console.log('ðŸŽ‰ Seeding completed!')
+  console.log('í¾‰ Seeding completed!')
 }
 
 main()

@@ -1,53 +1,73 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { CheckCircle } from 'lucide-react'
+'use client'
 
-export default function CheckoutSuccessPage() {
+import { Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+
+function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    // You can verify the session here if needed
-    setLoading(false)
-  }, [])
-
-  if (loading) {
-    return (
-      <div className="container-custom py-12">
-        <div className="text-center">Loading...</div>
-      </div>
-    )
-  }
-
+  
   return (
-    <div className="container-custom py-20">
-      <div className="max-w-2xl mx-auto text-center">
-        <CheckCircle className="w-20 h-20 text-green-600 dark:text-green-400 mx-auto mb-8" />
-        <h1 className="font-serif text-5xl mb-6 text-gray-900 dark:text-gray-100 tracking-[0.05em] font-light">
-          Thank You for Your Order!
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-10 text-lg font-light">
-          Your order has been received and is being processed. You will receive a confirmation
-          email shortly.
-        </p>
-        {sessionId && (
-          <p className="text-sm text-gray-500 dark:text-gray-500 mb-10 font-light">
-            Order ID: {sessionId}
+    <div className="container-custom py-12 text-center">
+      <div className="max-w-md mx-auto">
+        <div className="mb-8">
+          <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <h1 className="font-serif text-4xl mb-4 text-gray-900 dark:text-gray-100">Thank You!</h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-8">
+            Your order has been placed successfully. {sessionId && `Order ID: ${sessionId}`}
           </p>
-        )}
-        <div className="flex gap-6 justify-center">
-          <Link href="/account" className="btn-primary">
-            View Orders
+        </div>
+        
+        <div className="space-y-4">
+          <Link
+            href="/orders"
+            className="block w-full bg-black dark:bg-white text-white dark:text-black py-3 px-6 rounded-md font-light hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+          >
+            View Your Orders
           </Link>
-          <Link href="/products" className="btn-secondary">
+          <Link
+            href="/"
+            className="block w-full border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 py-3 px-6 rounded-md font-light hover:border-black dark:hover:border-white transition-colors"
+          >
             Continue Shopping
           </Link>
         </div>
+        
+        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Need help? <a href="/contact" className="text-gray-900 dark:text-gray-100 hover:underline">Contact our support team</a>
+          </p>
+        </div>
       </div>
     </div>
+  )
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="container-custom py-12 text-center">
+        <div className="max-w-md mx-auto">
+          <div className="animate-pulse">
+            <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-4"></div>
+            <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-8"></div>
+            <div className="space-y-4">
+              <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
+              <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <CheckoutSuccessContent />
+    </Suspense>
   )
 }

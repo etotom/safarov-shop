@@ -2,7 +2,7 @@ import { db } from '@/lib/db'
 import Link from 'next/link'
 
 async function getOrders() {
-  const orders = await db.order.findMany({}, { orderBy: { createdAt: 'desc' }, take: 50 })
+  const orders = await db.order.findMany({ orderBy: { createdAt: 'desc' }, take: 50 })
   return Promise.all(
     orders.map(async (order) => {
       const [user, items] = await Promise.all([

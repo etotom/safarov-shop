@@ -5,7 +5,7 @@ import { db } from '@/lib/db'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -14,7 +14,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const category = await db.category.findUnique({ id: params.id })
+    const category = await db.category.findUnique({ id: (await params).id })
 
     if (!category) {
       return NextResponse.json({ error: 'Category not found' }, { status: 404 })
@@ -29,7 +29,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -48,18 +48,18 @@ export async function PUT(
         return NextResponse.json({ error: 'Parent category not found' }, { status: 400 })
       }
       // Prevent circular references
-      if (parentId === params.id) {
+      if (parentId === (await params).id) {
         return NextResponse.json({ error: 'Category cannot be its own parent' }, { status: 400 })
       }
     }
 
-    const category = await db.category.update({
-      id: params.id,
-      data: {
+    const category = await db.category.update(
+      { id: (await params).id },
+      {
         ...updateData,
         parentId: parentId || null,
-      },
-    })
+      }
+    )
 
     return NextResponse.json({ category })
   } catch (error) {

@@ -13,7 +13,7 @@ export default async function HomePage() {
   const productsWithData = await Promise.all(
     featuredProducts.map(async (product) => {
       const [images, category] = await Promise.all([
-        db.productImage.findMany({ productId: product.id }, { orderBy: { position: 'asc' }, take: 1 }),
+        db.productImage.findMany({ where: { productId: product.id },  orderBy: { position: 'asc' }, take: 1 }),
         db.category.findUnique({ id: product.categoryId }),
       ])
       return {

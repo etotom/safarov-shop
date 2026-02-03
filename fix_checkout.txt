@@ -1,0 +1,9 @@
+    // Create order (pending status)
+    const order = await db.order.create({
+      userId: session.user.id,
+      status: 'PENDING',
+      total,
+      currency: 'USD',  // Add this line - use the appropriate currency
+      stripePaymentId: stripeSession.id,
+      shippingAddressId: addressId,
+    })

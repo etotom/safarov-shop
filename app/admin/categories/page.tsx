@@ -2,7 +2,7 @@ import { db } from '@/lib/db'
 import Link from 'next/link'
 
 async function getCategories() {
-  const categories = await db.category.findMany({}, { orderBy: { name: 'asc' } })
+  const categories = await db.category.findMany({ orderBy: { name: 'asc' } })
   return Promise.all(
     categories.map(async (category) => {
       const [parent, children, products] = await Promise.all([

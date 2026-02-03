@@ -25,12 +25,12 @@ async function getCategory(slug: string) {
 }
 
 async function getCategoryProducts(categoryId: string) {
-  const products = await db.product.findMany({ categoryId }, { orderBy: { createdAt: 'desc' } })
+  const products = await db.product.findMany({ where: { categoryId },  orderBy: { createdAt: 'desc' } })
 
   return Promise.all(
     products.map(async (product) => {
       const [images, category] = await Promise.all([
-        db.productImage.findMany({ productId: product.id }, { orderBy: { position: 'asc' }, take: 1 }),
+        db.productImage.findMany({ where: { productId: product.id },  orderBy: { position: 'asc' }, take: 1 }),
         db.category.findUnique({ id: product.categoryId }),
       ])
       return {

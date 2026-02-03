@@ -18,7 +18,7 @@ export async function GET() {
           item.variantId ? db.variant.findFirst({ id: item.variantId }) : null,
         ])
         const images = product
-          ? await db.productImage.findMany({ productId: product.id }, { orderBy: { position: 'asc' }, take: 1 })
+          ? await db.productImage.findMany({ where: { productId: product.id },  orderBy: { position: 'asc' }, take: 1 })
           : []
         return {
           ...item,
@@ -97,7 +97,7 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: 'Item not found' }, { status: 404 })
     }
 
-    const updated = await db.cartItem.update({ id: itemId }, { quantity })
+    const updated = await db.cartItem.update({ id: itemId }, {  quantity: quantity  })
 
     return NextResponse.json(updated)
   } catch (error) {

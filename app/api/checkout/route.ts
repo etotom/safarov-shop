@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
     const productIds = cartItems.map((item) => item.productId)
     const productsWithImages = await Promise.all(
       productIds.map(async (id) => {
-        const images = await db.productImage.findMany({ productId: id }, { orderBy: { position: 'asc' }, take: 1 })
+        const images = await db.productImage.findMany({ where: { productId: id },  orderBy: { position: 'asc' }, take: 1 })
         return { id, images }
       })
     )
@@ -96,6 +96,7 @@ export async function POST(request: NextRequest) {
       userId: session.user.id,
       status: 'PENDING',
       total,
+      currency: 'USD',  // ADDED THIS LINE - FIXED
       stripePaymentId: stripeSession.id,
       shippingAddressId: addressId,
     })

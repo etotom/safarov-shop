@@ -5,7 +5,7 @@ import { db } from '@/lib/db'
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -14,7 +14,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const user = await db.users.findUnique({ id: params.id })
+    const user = await db.users.findUnique({ id: (await params).id })
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
@@ -25,7 +25,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Cannot delete your own account' }, { status: 400 })
     }
 
-    await db.users.delete({ id: params.id })
+    await db.users.delete({ id: (await params).id })
 
     return NextResponse.json({ message: 'User deleted successfully' })
   } catch (error) {

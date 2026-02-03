@@ -50,18 +50,15 @@ export async function PUT(
     }
 
     const product = await db.product.update(
-      { id: (await params).id },
-      {
+      { id: (await params).id,
+      data: {
         ...updateData,
-        categoryId: categoryId || null,
-        slug: updateData.name
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/^-|-$/g, ""),
-      }
-    )
+        price: price ? parseFloat(price) : undefined,
+        categoryId: categoryId || undefined,
+      },
+    })
 
-    return NextResponse.json(product)
+    return NextResponse.json({ product })
   } catch (error) {
     console.error('Error updating product:', error)
     return NextResponse.json({ error: 'Failed to update product' }, { status: 500 })

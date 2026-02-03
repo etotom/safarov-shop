@@ -33,7 +33,7 @@ export async function PUT(
       const existingAddresses = await db.address.findMany({ userId: session.user.id })
       for (const addr of existingAddresses) {
         if (addr.id !== id && addr.isDefault) {
-          await db.address.update({ id: addr.id }, { isDefault: false })
+          await db.address.update({ id: addr.id }, {  isDefault: false  })
         }
       }
     }
@@ -61,7 +61,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const address = await db.address.findUnique({ id: params.id })
+    const address = await db.address.findUnique({ id: (await params).id })
 
     if (!address) {
       return NextResponse.json({ error: 'Address not found' }, { status: 404 })
@@ -71,7 +71,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    await db.address.delete({ id: params.id })
+    await db.address.delete({ id: (await params).id })
 
     return NextResponse.json({ message: 'Address deleted successfully' })
   } catch (error) {
