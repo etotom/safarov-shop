@@ -5,8 +5,9 @@ import { db } from '@/lib/db'
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const session = await getServerSession(authOptions)
 
@@ -14,7 +15,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const address = await db.address.findUnique({ id: params.id })
+    const address = await db.address.findUnique({ id: id })
 
     if (!address) {
       return NextResponse.json({ error: 'Address not found' }, { status: 404 })
@@ -31,14 +32,14 @@ export async function PUT(
     if (isDefault) {
       const existingAddresses = await db.address.findMany({ userId: session.user.id })
       for (const addr of existingAddresses) {
-        if (addr.id !== params.id && addr.isDefault) {
+        if (addr.id !== id && addr.isDefault) {
           await db.address.update({ id: addr.id }, { isDefault: false })
         }
       }
     }
 
     const updatedAddress = await db.address.update(
-      { id: params.id },
+      { id: id },
       { ...updateData, isDefault: isDefault || false }
     )
 
