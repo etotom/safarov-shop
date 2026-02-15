@@ -5,9 +5,7 @@ import { useSession, signOut } from 'next-auth/react'
 import { useState } from 'react'
 import { ShoppingBag, User, Menu, X, Moon, Sun } from 'lucide-react'
 import SearchBar from '@/components/search/SearchBar'
-import { useTheme } from '@/lib/theme.tsx'
-import { useLanguage } from '@/lib/language.tsx'
-import { useTranslation } from '@/lib/translations.ts'
+import { useTheme, useLanguage, useTranslation } from '@/lib'
 
 export default function Header() {
   const { data: session } = useSession()

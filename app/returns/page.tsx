@@ -1,7 +1,6 @@
 'use client'
 
-import { useLanguage } from '@/lib/language.tsx'
-import { useTranslation } from '@/lib/translations.ts'
+import { useLanguage, useTranslation } from '@/lib'
 
 export default function ReturnsPage() {
   const { language } = useLanguage()

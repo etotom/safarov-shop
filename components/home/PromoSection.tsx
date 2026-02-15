@@ -2,8 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useLanguage } from '@/lib/language.tsx'
-import { useTranslation } from '@/lib/translations.ts'
+import { useLanguage, useTranslation } from '@/lib'
 
 export default function PromoSection() {
   const { language } = useLanguage()
