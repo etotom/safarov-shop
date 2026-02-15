@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { useLanguage } from '@/lib/language'
-import { useTranslation } from '@/lib/translations'
+import { useLanguage } from '@/lib/language.tsx'
+import { useTranslation } from '@/lib/translations.ts'
 
 const faqs = [
   {
