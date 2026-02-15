@@ -1,7 +1,7 @@
 'use client'
 
-import { useLanguage } from '@/lib/language'
-import { useTranslation } from '@/lib/translations'
+import { useLanguage } from './lib/language'
+import { useTranslation } from './lib/translations'
 
 export default function ShippingPage() {
   const { language } = useLanguage()

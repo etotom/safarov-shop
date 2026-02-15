@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useLanguage } from '@/app/lib/language.tsx'
-import { useTranslation } from '@/app/lib/translations.ts'
+import { useLanguage } from '@/app/lib/language'
+import { useTranslation } from '@/app/lib/translations'
 
 export default function HeroContent() {
   const { language } = useLanguage()
