@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useLanguage, useTranslation } from '@/lib'
+import { useLanguage, useTranslation } from '../../../lib'
 
 export default function HeroContent() {
   const { language } = useLanguage()

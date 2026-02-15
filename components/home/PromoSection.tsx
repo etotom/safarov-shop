@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useLanguage, useTranslation } from '@/lib'
+import { useLanguage, useTranslation } from '../../../lib'
 
 export default function PromoSection() {
   const { language } = useLanguage()

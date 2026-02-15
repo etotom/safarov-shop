@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Facebook, Instagram, Twitter } from 'lucide-react'
-import { useLanguage, useTranslation } from '@/lib'
+import { useLanguage, useTranslation } from '../../lib'
 
 export default function Footer() {
   const { language } = useLanguage()

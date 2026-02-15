@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useLanguage, useTranslation } from '@/lib'
+import { useLanguage, useTranslation } from '../../lib'
 
 export default function ContactPage() {
   const { language } = useLanguage()

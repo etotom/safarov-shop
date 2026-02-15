@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { useLanguage, useTranslation } from '@/lib'
+import { useLanguage, useTranslation } from '../../lib'
 
 const faqs = [
   {

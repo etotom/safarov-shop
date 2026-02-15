@@ -1,6 +1,6 @@
 'use client'
 
-import { useLanguage, useTranslation } from '@/lib'
+import { useLanguage, useTranslation } from '../../lib'
 
 export default function ReturnsPage() {
   const { language } = useLanguage()
