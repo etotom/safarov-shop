@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useLanguage } from '@/lib/language.tsx'
-import { useTranslation } from '@/lib/translations.ts'
+import { useLanguage } from '@/app/lib/language.tsx'
+import { useTranslation } from '@/app/lib/translations.ts'
 import ProductCard from '@/components/products/ProductCard'
 
 interface Product {

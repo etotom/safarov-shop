@@ -1,7 +1,7 @@
 'use client'
 
-import { useLanguage } from '@/lib/language.tsx'
-import { useTranslation } from '@/lib/translations.ts'
+import { useLanguage } from '@/app/lib/language.tsx'
+import { useTranslation } from '@/app/lib/translations.ts'
 
 export default function AboutSection() {
   const { language } = useLanguage()
