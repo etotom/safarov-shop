@@ -1,8 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import { useLanguage } from '@/lib/language'
+import { useTranslation } from '@/lib/translations'
 
 export default function ContactPage() {
+  const { language } = useLanguage()
+  const t = useTranslation(language)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,7 +27,7 @@ export default function ContactPage() {
     <div className="container-custom py-16">
       <div className="max-w-4xl mx-auto">
         <h1 className="font-serif text-5xl mb-8 text-gray-900 dark:text-gray-100 tracking-[0.05em] font-light">
-          Contact Us
+          {t('page.contact')}
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">

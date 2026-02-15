@@ -6,51 +6,55 @@ import { useState } from 'react'
 import { ShoppingBag, User, Menu, X, Moon, Sun } from 'lucide-react'
 import SearchBar from '@/components/search/SearchBar'
 import { useTheme } from '@/lib/theme'
+import { useLanguage } from '@/lib/language'
+import { useTranslation } from '@/lib/translations'
 
 export default function Header() {
   const { data: session } = useSession()
   const { theme, toggleTheme } = useTheme()
+  const { language } = useLanguage()
+  const t = useTranslation(language)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const categories = [
     {
-      name: 'Women',
+      name: t('category.women'),
       href: '/category/women',
       subcategories: [
-        { name: 'Outerwear', slug: 'women-outerwear' },
-        { name: 'Coats & Jackets', slug: 'women-coats-jackets' },
-        { name: 'Blazers', slug: 'women-blazers' },
-        { name: 'Bags', slug: 'women-bags' },
-        { name: 'Handbags', slug: 'women-handbags' },
-        { name: 'Accessories', slug: 'women-accessories' },
-        { name: 'Scarves', slug: 'women-scarves' },
-        { name: 'Gloves', slug: 'women-gloves' },
-        { name: 'Shoes', slug: 'women-shoes' },
+        { name: t('subcategory.outerwear'), slug: 'women-outerwear' },
+        { name: t('subcategory.coatsJackets'), slug: 'women-coats-jackets' },
+        { name: t('subcategory.blazers'), slug: 'women-blazers' },
+        { name: t('subcategory.bags'), slug: 'women-bags' },
+        { name: t('subcategory.handbags'), slug: 'women-handbags' },
+        { name: t('subcategory.accessories'), slug: 'women-accessories' },
+        { name: t('subcategory.scarves'), slug: 'women-scarves' },
+        { name: t('subcategory.gloves'), slug: 'women-gloves' },
+        { name: t('subcategory.shoes'), slug: 'women-shoes' },
       ],
     },
     {
-      name: 'Men',
+      name: t('category.men'),
       href: '/category/men',
       subcategories: [
-        { name: 'Outerwear', slug: 'men-outerwear' },
-        { name: 'Coats & Jackets', slug: 'men-coats-jackets' },
-        { name: 'Blazers', slug: 'men-blazers' },
-        { name: 'Suits', slug: 'men-suits' },
-        { name: 'Accessories', slug: 'men-accessories' },
-        { name: 'Scarves', slug: 'men-scarves' },
-        { name: 'Gloves', slug: 'men-gloves' },
-        { name: 'Shoes', slug: 'men-shoes' },
+        { name: t('subcategory.outerwear'), slug: 'men-outerwear' },
+        { name: t('subcategory.coatsJackets'), slug: 'men-coats-jackets' },
+        { name: t('subcategory.blazers'), slug: 'men-blazers' },
+        { name: t('subcategory.suits'), slug: 'men-suits' },
+        { name: t('subcategory.accessories'), slug: 'men-accessories' },
+        { name: t('subcategory.scarves'), slug: 'men-scarves' },
+        { name: t('subcategory.gloves'), slug: 'men-gloves' },
+        { name: t('subcategory.shoes'), slug: 'men-shoes' },
       ],
     },
     {
-      name: 'Kids',
+      name: t('category.kids'),
       href: '/category/kids',
       subcategories: [
-        { name: 'Outerwear', slug: 'kids-outerwear' },
-        { name: 'Coats', slug: 'kids-coats' },
-        { name: 'Accessories', slug: 'kids-accessories' },
-        { name: 'Scarves', slug: 'kids-scarves' },
-        { name: 'Gloves', slug: 'kids-gloves' },
+        { name: t('subcategory.outerwear'), slug: 'kids-outerwear' },
+        { name: t('subcategory.coatsJackets'), slug: 'kids-coats' },
+        { name: t('subcategory.accessories'), slug: 'kids-accessories' },
+        { name: t('subcategory.scarves'), slug: 'kids-scarves' },
+        { name: t('subcategory.gloves'), slug: 'kids-gloves' },
       ],
     },
   ]
@@ -125,14 +129,14 @@ export default function Header() {
                     href="/admin"
                     className="text-sm uppercase tracking-[0.15em] hover:text-gray-600 dark:hover:text-gray-300 font-light"
                   >
-                    Admin
+                    {t('nav.admin')}
                   </Link>
                 )}
                 <button
                   onClick={() => signOut()}
                   className="text-sm uppercase tracking-[0.15em] hover:text-gray-600 dark:hover:text-gray-300 font-light"
                 >
-                  Sign Out
+                  {t('nav.signOut')}
                 </button>
               </>
             ) : (
@@ -140,7 +144,7 @@ export default function Header() {
                 href="/auth/signin"
                 className="text-sm uppercase tracking-[0.15em] hover:text-gray-600 dark:hover:text-gray-300 font-light"
               >
-                Sign In
+                {t('nav.signIn')}
               </Link>
             )}
 

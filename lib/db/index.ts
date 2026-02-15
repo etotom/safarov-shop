@@ -157,7 +157,29 @@ class Database {
 
   // Products
   product = {
-    findMany: async (where?: any, options?: any): Promise<Product[]> => {
+    findMany: async (config?: any, optionsParam?: any): Promise<any[]> => {
+      // Support both calling styles:
+      // 1. findMany({ where: {}, include: {}, orderBy: {}, take: 8, skip: 0 })
+      // 2. findMany({ where }, { orderBy, skip, take })
+      
+      // If first param has where property, use it as config, otherwise treat as where
+      let where, options
+      
+      if (config?.where !== undefined || config?.include !== undefined) {
+        // Prisma style
+        where = config?.where
+        options = {
+          orderBy: config?.orderBy,
+          skip: config?.skip,
+          take: config?.take,
+          include: config?.include,
+        }
+      } else {
+        // Old style with separate options
+        where = config
+        options = optionsParam || {}
+      }
+
       let products = this.readFile<Product>('products.json')
       if (where) {
         if (where.categoryId) {
@@ -193,17 +215,107 @@ class Database {
       if (options?.take) {
         products = products.slice(0, options.take)
       }
+
+      // Handle include parameter
+      if (options?.include) {
+        const categories = this.readFile<Category>('categories.json')
+        const images = this.readFile<ProductImage>('productImages.json')
+        const variants = this.readFile<Variant>('variants.json')
+
+        return products.map((product) => {
+          const result: any = { ...product }
+
+          if (options.include.category) {
+            result.category = categories.find((c) => c.id === product.categoryId) || null
+          }
+
+          if (options.include.images) {
+            let productImages = images.filter((img) => img.productId === product.id)
+            
+            // Apply orderBy if specified
+            if (options.include.images.orderBy) {
+              const [key, direction] = Object.entries(options.include.images.orderBy)[0]
+              productImages.sort((a, b) => {
+                const aVal = (a as any)[key]
+                const bVal = (b as any)[key]
+                if (direction === 'asc') return aVal > bVal ? 1 : -1
+                return aVal < bVal ? 1 : -1
+              })
+            }
+            
+            // Apply take if specified
+            if (options.include.images.take) {
+              productImages = productImages.slice(0, options.include.images.take)
+            }
+            
+            result.images = productImages
+          }
+
+          if (options.include.variants) {
+            result.variants = variants.filter((v) => v.productId === product.id)
+          }
+
+          return result
+        })
+      }
+
       return products
     },
-    findUnique: async (where: { slug?: string; id?: string }): Promise<Product | null> => {
+    findUnique: async (config: any): Promise<any> => {
+      const where = config?.where || config
+      const include = config?.include
+      
       const products = this.readFile<Product>('products.json')
+      let product: Product | null = null
+      
       if (where.slug) {
-        return products.find((p) => p.slug === where.slug) || null
+        product = products.find((p) => p.slug === where.slug) || null
       }
       if (where.id) {
-        return products.find((p) => p.id === where.id) || null
+        product = products.find((p) => p.id === where.id) || null
       }
-      return null
+      
+      if (!product) return null
+
+      // Handle include parameter
+      if (include) {
+        const result: any = { ...product }
+        const categories = this.readFile<Category>('categories.json')
+        const images = this.readFile<ProductImage>('productImages.json')
+        const variants = this.readFile<Variant>('variants.json')
+
+        if (include.category) {
+          result.category = categories.find((c) => c.id === product!.categoryId) || null
+        }
+
+        if (include.images) {
+          let productImages = images.filter((img) => img.productId === product!.id)
+          
+          if (include.images.orderBy) {
+            const [key, direction] = Object.entries(include.images.orderBy)[0]
+            productImages.sort((a, b) => {
+              const aVal = (a as any)[key]
+              const bVal = (b as any)[key]
+              if (direction === 'asc') return aVal > bVal ? 1 : -1
+              return aVal < bVal ? 1 : -1
+            })
+          }
+          
+          if (include.images.take) {
+            productImages = productImages.slice(0, include.images.take)
+          }
+          
+          result.images = productImages
+        }
+
+        if (include.variants) {
+          result.variants = variants.filter((v) => v.productId === product!.id)
+        }
+
+        return result
+      }
+
+      return product
     },
     create: async (data: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>): Promise<Product> => {
       const products = this.readFile<Product>('products.json')

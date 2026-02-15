@@ -1,27 +1,34 @@
+'use client'
+
+import { useLanguage } from '@/lib/language'
+import { useTranslation } from '@/lib/translations'
+
 export default function ShippingPage() {
+  const { language } = useLanguage()
+  const t = useTranslation(language)
   return (
     <div className="container-custom py-16">
       <div className="max-w-4xl mx-auto">
         <h1 className="font-serif text-5xl mb-8 text-gray-900 dark:text-gray-100 tracking-[0.05em] font-light">
-          Shipping Information
+          {t('page.shipping')}
         </h1>
 
         <section className="mb-8">
           <h2 className="font-serif text-3xl mb-4 text-gray-900 dark:text-gray-100 font-light">
-            Shipping Options
+            {t('shipping.options')}
           </h2>
           <div className="space-y-4 text-gray-700 dark:text-gray-300 font-light">
             <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-              <h3 className="font-medium mb-2 text-gray-900 dark:text-gray-100">Standard Shipping</h3>
-              <p>5-7 business days - $10.00</p>
+              <h3 className="font-medium mb-2 text-gray-900 dark:text-gray-100">{t('shipping.standard')}</h3>
+              <p>{t('shipping.standardDesc')}</p>
             </div>
             <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-              <h3 className="font-medium mb-2 text-gray-900 dark:text-gray-100">Express Shipping</h3>
-              <p>2-3 business days - $25.00</p>
+              <h3 className="font-medium mb-2 text-gray-900 dark:text-gray-100">{t('shipping.express')}</h3>
+              <p>{t('shipping.expressDesc')}</p>
             </div>
             <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
-              <h3 className="font-medium mb-2 text-gray-900 dark:text-gray-100">Overnight Shipping</h3>
-              <p>Next business day - $50.00</p>
+              <h3 className="font-medium mb-2 text-gray-900 dark:text-gray-100">{t('shipping.overnight')}</h3>
+              <p>{t('shipping.overnightDesc')}</p>
             </div>
           </div>
         </section>

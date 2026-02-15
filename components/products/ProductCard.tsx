@@ -14,7 +14,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const mainImage = product.images.find((img) => img.position === 0) || product.images[0]
+  const mainImage = product.images && product.images.length > 0 
+    ? (product.images.find((img) => img.position === 0) || product.images[0])
+    : null
   const [showConverter, setShowConverter] = useState(false)
 
   return (
@@ -39,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.name}
         </h3>
         <p className="text-xs text-gray-600 dark:text-gray-400 uppercase tracking-wider font-light">
-          {product.category.name}
+          {product.category?.name || 'Uncategorized'}
         </p>
         <div className="flex items-center space-x-2">
           <p className="text-lg font-light text-gray-900 dark:text-gray-100">
