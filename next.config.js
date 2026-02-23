@@ -30,6 +30,7 @@ const nextConfig = {
       bodySizeLimit: '2mb',
     },
   },
-}
+  output: 'export',
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

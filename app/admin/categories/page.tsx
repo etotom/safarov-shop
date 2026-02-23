@@ -2,22 +2,14 @@ import { db } from '@/lib/db'
 import Link from 'next/link'
 
 async function getCategories() {
-  const categories = await db.category.findMany({}, { orderBy: { name: 'asc' } })
-  return Promise.all(
-    categories.map(async (category) => {
-      const [parent, children, products] = await Promise.all([
-        category.parentId ? db.category.findUnique({ id: category.parentId }) : null,
-        db.category.findMany({ parentId: category.id }),
-        db.product.findMany({ categoryId: category.id }),
-      ])
-      return {
-        ...category,
-        parent: parent || null,
-        children: children || [],
-        _count: { products: products.length },
-      }
-    })
-  )
+  const categories = await db.category.findMany({
+    orderBy: { name: 'asc' },
+    include: {
+      parent: true,
+      children: true
+    }
+  })
+  return categories
 }
 
 export default async function AdminCategoriesPage() {
@@ -65,10 +57,10 @@ export default async function AdminCategoriesPage() {
                   {category.slug}
                 </td>
                 <td className="px-6 py-5 text-gray-600 dark:text-gray-400 font-light">
-                  {category.parent?.name || '-'}
+                  {category.parentId || '-'}
                 </td>
                 <td className="px-6 py-5 text-gray-600 dark:text-gray-400 font-light">
-                  {category._count.products}
+                  {category.children ? category.children.length : 0}
                 </td>
                 <td className="px-6 py-5">
                   <Link
