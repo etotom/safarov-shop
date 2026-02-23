@@ -5,16 +5,12 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useTheme } from '@/lib/theme'
-import { useLanguage, languageNames, type Language } from '@/lib/language'
-import { useTranslation } from '@/lib/translations'
 import { Moon, Sun } from 'lucide-react'
 
 export default function SettingsPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const { theme, toggleTheme } = useTheme()
-  const { language, setLanguage } = useLanguage()
-  const t = useTranslation(language)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -38,7 +34,7 @@ export default function SettingsPage() {
 
   return (
     <div className="container-custom py-12">
-      <h1 className="font-serif text-4xl mb-8">{t('settings.title')}</h1>
+      <h1 className="font-serif text-4xl mb-8">Settings</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <aside className="lg:col-span-1">
@@ -52,19 +48,19 @@ export default function SettingsPage() {
                 href="/account"
                 className="block py-2 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
               >
-                {t('nav.orders')}
+                Orders
               </Link>
               <Link
                 href="/account/addresses"
                 className="block py-2 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
               >
-                {t('nav.addresses')}
+                Addresses
               </Link>
               <Link
                 href="/account/settings"
                 className="block py-2 border-b border-gray-200 dark:border-gray-700 font-medium text-black dark:text-white"
               >
-                {t('nav.settings')}
+                Settings
               </Link>
             </nav>
           </div>
@@ -72,15 +68,15 @@ export default function SettingsPage() {
 
         <div className="lg:col-span-3">
           <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-8">
-            <h2 className="font-serif text-2xl mb-6">{t('settings.preferences')}</h2>
+            <h2 className="font-serif text-2xl mb-6">Preferences</h2>
 
             <div className="space-y-6">
               {/* Theme Toggle */}
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium mb-1 text-gray-900 dark:text-gray-100">{t('settings.theme')}</h3>
+                  <h3 className="font-medium mb-1 text-gray-900 dark:text-gray-100">Theme</h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('settings.theme.description')}
+                    Choose your preferred theme
                   </p>
                 </div>
                 <button
@@ -90,12 +86,12 @@ export default function SettingsPage() {
                   {theme === 'dark' ? (
                     <>
                       <Sun className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-                      <span className="text-sm text-gray-700 dark:text-gray-300">{t('settings.theme.light')}</span>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">Light</span>
                     </>
                   ) : (
                     <>
                       <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-                      <span className="text-sm text-gray-700 dark:text-gray-300">{t('settings.theme.dark')}</span>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">Dark</span>
                     </>
                   )}
                 </button>
@@ -104,35 +100,10 @@ export default function SettingsPage() {
               {/* Current Theme Display */}
               <div className="py-4 border-b border-gray-200 dark:border-gray-700">
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {t('settings.currentTheme')}: <span className="font-medium capitalize">{theme}</span>
+                  Current theme: <span className="font-medium capitalize">{theme}</span>
                 </p>
               </div>
 
-              {/* Language Selection */}
-              <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
-                <div>
-                  <h3 className="font-medium mb-1 text-gray-900 dark:text-gray-100">{t('settings.language')}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t('settings.language.description')}
-                  </p>
-                </div>
-                <select
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value as Language)}
-                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400"
-                >
-                  <option value="en">{languageNames.en}</option>
-                  <option value="ru">{languageNames.ru}</option>
-                  <option value="tj">{languageNames.tj}</option>
-                </select>
-              </div>
-
-              {/* Current Language Display */}
-              <div className="py-4">
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {t('settings.currentLanguage')}: <span className="font-medium">{languageNames[language]}</span>
-                </p>
-              </div>
             </div>
           </div>
         </div>

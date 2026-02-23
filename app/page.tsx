@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { db } from '@/lib/db'
 import ProductCard from '@/components/products/ProductCard'
+import { useEffect, useState } from 'react'
 
 export default async function HomePage() {
   const featuredProducts = await db.product.findMany(
@@ -28,26 +29,27 @@ export default async function HomePage() {
     <div>
       {/* Hero Section */}
       <section className="relative h-[85vh] min-h-[700px] flex items-center justify-center bg-warm-gray dark:bg-gray-900 overflow-hidden">
-        <div className="absolute inset-0 hero-bg-animate">
+        <div className="absolute inset-0 z-0">
           <Image
-            src="/images/background_main_page.png"
+            src="/images/db-fon.png"
             alt="Luxury Fashion Background"
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-1000 ease-in-out hero-bg-animate"
             priority
             sizes="100vw"
             quality={90}
+            style={{ objectPosition: 'center' }}
           />
           <div className="absolute inset-0 bg-black/20 dark:bg-black/40"></div>
         </div>
         <div className="relative z-10 text-center container-custom">
-          <h1 className="font-serif text-6xl md:text-8xl mb-8 text-white drop-shadow-lg tracking-[0.1em] font-light">
+          <h1 className="font-serif text-6xl md:text-8xl mb-8 text-white drop-shadow-lg tracking-[0.1em] font-light animate-fade-in-up">
             Safarov shop
           </h1>
-          <p className="text-xl md:text-3xl mb-12 text-white drop-shadow-md font-light tracking-wider">
+          <p className="text-xl md:text-3xl mb-12 text-white drop-shadow-md font-light tracking-wider animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             Timeless Elegance, Crafted to Perfection
           </p>
-          <Link href="/products" className="btn-primary inline-block">
+          <Link href="/products" className="btn-primary inline-block animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
             Shop Now
           </Link>
         </div>
@@ -65,12 +67,14 @@ export default async function HomePage() {
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {productsWithData.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {productsWithData.map((product, index) => (
+            <div key={product.id} className="animate-fade-in-up" style={{ animationDelay: `${0.4 + index * 0.1}s` }}>
+              <ProductCard product={product} />
+            </div>
           ))}
         </div>
         <div className="text-center mt-12">
-          <Link href="/products" className="btn-secondary inline-block">
+          <Link href="/products" className="btn-secondary inline-block animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
             View All Products
           </Link>
         </div>
@@ -115,10 +119,10 @@ export default async function HomePage() {
       {/* About Section */}
       <section className="py-24 container-custom">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-serif text-5xl mb-8 text-gray-900 dark:text-gray-100 tracking-[0.05em] font-light">
+          <h2 className="font-serif text-5xl mb-8 text-gray-900 dark:text-gray-100 tracking-[0.05em] font-light animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             Craftsmanship & Quality
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-light">
+          <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-light animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             At Safarov shop, we believe in creating pieces that transcend trends. Our collections
             are crafted from the finest materials, with meticulous attention to detail and
             timeless design. Each garment is a testament to luxury, quality, and enduring style.

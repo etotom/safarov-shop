@@ -60,7 +60,7 @@ export default function Header() {
       <div className="container-custom">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-serif tracking-wider text-gray-900 dark:text-gray-100">
+          <Link href="/" className="text-2xl font-serif tracking-wider text-gray-900 dark:text-gray-100" style={{ paddingLeft: '0px' }}>
             Safarov shop
           </Link>
 
