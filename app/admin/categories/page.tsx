@@ -59,9 +59,9 @@ export default async function AdminCategoriesPage() {
                 <td className="px-6 py-5 text-gray-600 dark:text-gray-400 font-light">
                   {category.parentId || '-'}
                 </td>
-                <td className="px-6 py-5 text-gray-600 dark:text-gray-400 font-light">
-                  {category.children ? category.children.length : 0}
-                </td>
+                  <td className="px-6 py-5 text-gray-600 dark:text-gray-400 font-light">
+                    0
+                  </td>
                 <td className="px-6 py-5">
                   <Link
                     href={`/admin/categories/${category.id}`}

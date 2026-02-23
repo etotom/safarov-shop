@@ -54,7 +54,7 @@ export async function PUT(
     }
 
     const category = await db.category.update({
-      id: params.id,
+      where: { id: params.id },
       data: {
         ...updateData,
         parentId: parentId || null,
